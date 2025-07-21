@@ -3,7 +3,7 @@ stages:
   - code-analysis
   - build
   - security-scan
-#d
+
 variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: "/certs"
