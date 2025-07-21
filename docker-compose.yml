@@ -129,7 +129,7 @@ services:
   # --- Node.js Microservices ---
   transaction-generator-api:
     build:
-      context: ./services/TransactionGenerationAPI
+      context: ./Services/TransactionGenerationAPI
       dockerfile: Dockerfile
     container_name: transaction-generator-api
     ports:
@@ -146,7 +146,7 @@ services:
 
   data-analyser-service:
     build:
-      context: ./services/DataAnalyserService
+      context: ./Services/DataAnalyserService
       dockerfile: Dockerfile
     container_name: data-analyser-service
     environment:
