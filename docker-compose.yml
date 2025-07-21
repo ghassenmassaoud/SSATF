@@ -149,6 +149,8 @@ services:
       context: ./Services/DataAnalyserService
       dockerfile: Dockerfile
     container_name: data-analyser-service
+    ports: 
+      - "7002:7002" # Expose the Data Analyser Service port
     environment:
       KAFKA_BROKER: kafka:9092 # Updated to kafka:9092 as advertised
       # Add other environment variables for this service (e.g., Elasticsearch host if it writes there)
