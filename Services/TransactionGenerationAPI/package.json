@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node TranGenApi.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node TranGenAPI.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parser": "^3.2.0",
@@ -23,6 +21,8 @@
     "multer": "^2.0.1"
   },
   "devDependencies": {
-    "jest": "^30.0.4"
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0",
+    "mongodb-memory-server": "^8.12.0"
   }
 }

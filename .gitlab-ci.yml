@@ -1,0 +1,71 @@
+stages:
+  - test
+  - code-analysis
+  - build
+  - security-scan
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+
+# Test stage
+test:
+  stage: test
+  image: node:18-alpine
+  cache:
+    paths:
+      - node_modules/
+  before_script:
+    - cd Services/DataAnalyserService && npm ci
+    - cd ../TransactionGenerationAPI && npm ci
+    - cd ../../Client_UI && npm ci
+  script:
+    - cd Services/DataAnalyserService && npm test
+    - cd ../TransactionGenerationAPI && npm test
+    - cd ../../Client_UI && npm test
+  coverage: '/Lines\s*:\s*(\d+\.\d+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    paths:
+      - coverage/
+
+# SonarQube analysis
+sonarqube-check:
+  stage: code-analysis
+  image: sonarsource/sonar-scanner-cli:latest
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - devops
+
+# Build Docker images
+build:
+  stage: build
+  image: docker:28.3.2
+  services:
+    - docker:28.3.2-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/data-analyser:$CI_COMMIT_SHA ./Services/DataAnalyserService
+    - docker build -t $CI_REGISTRY_IMAGE/transaction-api:$CI_COMMIT_SHA ./Services/TransactionGenerationAPI
+    - docker build -t $CI_REGISTRY_IMAGE/client-ui:$CI_COMMIT_SHA ./Client_UI
+    - docker push $CI_REGISTRY_IMAGE/data-analyser:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/transaction-api:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/client-ui:$CI_COMMIT_SHA
+

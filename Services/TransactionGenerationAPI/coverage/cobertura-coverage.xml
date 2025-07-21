@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="3" lines-covered="0" line-rate="0" branches-valid="0" branches-covered="0" branch-rate="1" timestamp="1753045346766" complexity="0" version="0.1">
+  <sources>
+    <source>C:\Users\ProInfo\Desktop\saft\SSATF\Services\TransactionGenerationAPI</source>
+  </sources>
+  <packages>
+    <package name="main" line-rate="0" branch-rate="1">
+      <classes>
+        <class name="transactions.js" filename="src\test\fixtures\transactions.js" line-rate="0" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="0" branch="false"/>
+            <line number="35" hits="0" branch="false"/>
+            <line number="46" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

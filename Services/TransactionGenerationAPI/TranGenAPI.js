@@ -91,9 +91,14 @@ app.post('/use-mongo', async (req, res) => {
   }
 });
 
-// 🎯 Start the API
-connectKafkaProducer().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 TransactionGenerationAPI running on port ${PORT}`);
+// Export the app for testing
+module.exports = app;
+
+// Only start server if this file is run directly (not imported)
+if (require.main === module) {
+  connectKafkaProducer().then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 TransactionGenerationAPI running on port ${PORT}`);
+    });
   });
-});
+}
