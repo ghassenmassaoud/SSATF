@@ -6,7 +6,11 @@
     "start": "node TranGenAPI.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "build": "npm run build:clean && npm run build:copy",
+    "build:clean": "rm -rf dist || rmdir /s dist",
+    "build:copy": "mkdir -p dist && cp *.js dist/ && cp package*.json dist/",
+    "prebuild": "npm run test"
   },
   "dependencies": {
     "cors": "^2.8.5",

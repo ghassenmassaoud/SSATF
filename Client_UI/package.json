@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests for UI\"",
+    "build": "npm run build:assets && npm run build:dist",
+    "build:assets": "cp -r assets dist/ || xcopy assets dist\\ /E /I",
+    "build:dist": "mkdir -p dist && cp *.js dist/ && cp *.html dist/",
+    "start": "node User_UI.js",
+    "dev": "nodemon User_UI.js"
   },
   "keywords": [],
   "author": "",
