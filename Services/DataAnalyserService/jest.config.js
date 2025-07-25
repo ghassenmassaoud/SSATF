@@ -8,5 +8,13 @@ module.exports = {
     '!jest.config.js'
   ],
   testTimeout: 10000,
-  forceExit: true
+  forceExit: true,
+  detectOpenHandles: true,
+  reporters: [
+    'default',
+    ['jest-junit', {
+      outputDirectory: './',
+      outputName: 'test-results.xml'
+    }]
+  ]
 };

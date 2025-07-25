@@ -9,7 +9,12 @@ module.exports = {
   ],
   testTimeout: 10000,
   forceExit: true,
-  detectOpenHandles: true
+  detectOpenHandles: true,
+  reporters: [
+    'default',
+    ['jest-junit', {
+      outputDirectory: './',
+      outputName: 'test-results.xml'
+    }]
+  ]
 };
-
-
