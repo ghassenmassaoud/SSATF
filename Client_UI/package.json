@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"No tests for UI\"",
     "build": "npm run build:assets && npm run build:dist",
-    "build:assets": "cp -r assets dist/ || xcopy assets dist\\ /E /I",
+    "build:assets": "cp -r assets dist/ ",
     "build:dist": "mkdir -p dist && cp *.js dist/ && cp *.html dist/",
     "start": "node User_UI.js",
     "dev": "nodemon User_UI.js"

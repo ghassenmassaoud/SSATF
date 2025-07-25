@@ -8,7 +8,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "npm run build:clean && npm run build:copy",
-    "build:clean": "rm -rf dist || rmdir /s dist",
+    "build:clean": "rm -rf dist ",
     "build:copy": "mkdir -p dist && cp *.js dist/ && cp package*.json dist/",
     "prebuild": "npm run test",
     "dev": "nodemon index.js"

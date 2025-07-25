@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="6" failures="0" errors="0" time="0.635">
+  <testsuite name="TransactionGenerationAPI" errors="0" failures="0" skipped="0" timestamp="2025-07-25T23:23:30" time="0.595" tests="6">
+    <testcase classname="TransactionGenerationAPI POST /upload-file should process JSON file and send to Kafka" name="TransactionGenerationAPI POST /upload-file should process JSON file and send to Kafka" time="0.095">
+    </testcase>
+    <testcase classname="TransactionGenerationAPI POST /upload-file should process CSV file and send to Kafka" name="TransactionGenerationAPI POST /upload-file should process CSV file and send to Kafka" time="0.017">
+    </testcase>
+    <testcase classname="TransactionGenerationAPI POST /upload-file should reject unsupported file types" name="TransactionGenerationAPI POST /upload-file should reject unsupported file types" time="0.014">
+    </testcase>
+    <testcase classname="TransactionGenerationAPI POST /upload-file should handle file processing errors" name="TransactionGenerationAPI POST /upload-file should handle file processing errors" time="0.015">
+    </testcase>
+    <testcase classname="TransactionGenerationAPI POST /use-mongo should connect to MongoDB and send data to Kafka" name="TransactionGenerationAPI POST /use-mongo should connect to MongoDB and send data to Kafka" time="0.016">
+    </testcase>
+    <testcase classname="TransactionGenerationAPI POST /use-mongo should handle MongoDB connection errors" name="TransactionGenerationAPI POST /use-mongo should handle MongoDB connection errors" time="0.007">
+    </testcase>
+  </testsuite>
+</testsuites>
