@@ -1,23 +1,37 @@
 module.exports = {
-  testEnvironment: 'node',
-  testMatch: ['**/__tests__/**/*.test.js'],
+  testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/**/*.test.js', '**/*.test.js'],
+  collectCoverage: true,
   collectCoverageFrom: [
-    '*.js',
+    'src/**/*.{js,jsx}',
+    '!src/index.js',
     '!node_modules/**',
     '!coverage/**',
-    '!jest.config.js'
+    '!dist/**',
+    '!build/**'
   ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'cobertura', 'json'],
   testTimeout: 10000,
-  forceExit: true,
-  detectOpenHandles: true,
-  coverageReporters: ['text', 'lcov', 'cobertura'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+  moduleNameMapping: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
+  },
   reporters: [
     'default',
     ['jest-junit', {
       outputDirectory: './',
       outputName: 'test-results.xml'
     }]
-  ]
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 0,
+      functions: 0,
+      lines: 0,
+      statements: 0
+    }
+  }
 };
 
 
