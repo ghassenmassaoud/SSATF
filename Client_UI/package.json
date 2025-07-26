@@ -17,6 +17,7 @@
   "dependencies": {
     "express": "^5.1.0",
     "nodemon": "^3.1.10",
-    "startbootstrap-grayscale": "^7.0.6"
+    "startbootstrap-grayscale": "^7.0.6",
+    "jest-junit": "^16.0.0"
   }
 }
