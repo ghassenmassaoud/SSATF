@@ -10,6 +10,7 @@ module.exports = {
   testTimeout: 10000,
   forceExit: true,
   detectOpenHandles: true,
+  coverageReporters: ['text', 'lcov', 'cobertura'],
   reporters: [
     'default',
     ['jest-junit', {
@@ -18,3 +19,5 @@ module.exports = {
     }]
   ]
 };
+
+
