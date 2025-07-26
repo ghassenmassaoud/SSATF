@@ -22,8 +22,7 @@
     "kafka-node": "^5.0.0",
     "kafkajs": "^2.2.4",
     "mongodb": "^6.17.0",
-    "multer": "^2.0.1",
-    "jest-junit": "^16.0.0"
+    "multer": "^2.0.1"
   },
   "devDependencies": {
     "jest": "^29.0.0",

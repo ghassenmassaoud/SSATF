@@ -14,13 +14,18 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "kafkajs": "^2.2.4",
-    "express": "^5.1.0"
+    "currency-codes": "^2.1.0",
+    "moment-timezone": "^0.5.43",
+    "validator": "^13.11.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "jest": "^29.0.0",
+    "jest-junit": "^16.0.0",
     "nodemon": "^3.1.10",
-    "supertest": "^6.3.0",
-    "jest-junit": "^16.0.0"
+    "supertest": "^6.3.0"
   }
 }
