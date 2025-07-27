@@ -14,7 +14,7 @@ module.exports = {
   coverageReporters: ['text', 'lcov', 'cobertura', 'json'],
   testTimeout: 10000,
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
   reporters: [

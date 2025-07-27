@@ -21,6 +21,9 @@
     "startbootstrap-grayscale": "^7.0.6"
   },
   "devDependencies": {
-    "jest-junit": "^16.0.0"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "identity-obj-proxy": "^3.0.0"
   }
 }
