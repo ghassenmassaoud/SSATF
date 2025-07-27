@@ -10,7 +10,16 @@ const csvParser = require('csv-parser');
 const app = express();
 app.use(cors());
 app.use(express.json());
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ 
+  dest: 'uploads/',
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB max file size
+    files: 1, // Only allow 1 file at a time
+    fieldSize: 1024 * 1024, // 1MB max field size
+    fieldNameSize: 100, // Max field name length
+    fields: 10 // Max number of non-file fields
+  }
+});
 
 const PORT = process.env.PORT || 7000;
 const KAFKA_BROKER = process.env.KAFKA_BROKER || 'localhost:9092';
