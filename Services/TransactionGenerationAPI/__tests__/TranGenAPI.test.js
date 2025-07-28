@@ -54,6 +54,7 @@ describe('TransactionGenerationAPI', () => {
     // Clean up any open handles
     if (mockDisconnect) {
       await mockDisconnect();
+      if (mockClose) await mockClose();
     }
   });
 
