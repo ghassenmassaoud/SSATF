@@ -3,7 +3,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.js', '**/*.test.js'],
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.{js,jsx}',
+    '**/*.{js,jsx}',
     '!src/index.js',
     '!node_modules/**',
     '!coverage/**',
