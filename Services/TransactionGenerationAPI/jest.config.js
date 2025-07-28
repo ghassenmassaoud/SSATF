@@ -13,15 +13,15 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'cobertura', 'json'],
   testTimeout: 10000,
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  setupFilesAfterEnv: ['<./setupTests.js'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
   reporters: [
     'default',
     ['jest-junit', {
-      outputDirectory: './reports/junit',
-      outputName: 'test-results.xml'
+      outputDirectory: './',
+      outputName: 'junit.xml'
     }]
   ],
   coverageThreshold: {

@@ -19,8 +19,8 @@ module.exports = {
   reporters: [
     'default',
     ['jest-junit', {
-      outputDirectory: './reports/junit',
-      outputName: 'test-results.xml'
+      outputDirectory: './',
+      outputName: 'junit.xml'
     }]
   ],
   coverageThreshold: {

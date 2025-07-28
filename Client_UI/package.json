@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"No tests for UI\"",
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
     "build": "npm run build:assets && npm run build:dist",
     "build:assets": "cp -r assets dist/ ",
     "build:dist": "mkdir -p dist && cp *.js dist/ && cp *.html dist/",
