@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: financial-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: worker
+      initContainers:
+      - name: wait-for-kafka
+        image: busybox:1.35
+        command: ['sh', '-c', 'until nc -z k-service 9092; do echo waiting for kafka; sleep 2; done;']
+      - name: wait-for-elasticsearch
+        image: busybox:1.35
+        command: ['sh', '-c', 'until nc -z elasticsearch 9200; do echo waiting for elasticsearch; sleep 2; done;']
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:9.0.3
+        ports:
+        - containerPort: 9600
+        - containerPort: 5044
+        env:
+        - name: LS_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
+        - name: XPACK_MONITORING_ENABLED
+          value: "false"
+        volumeMounts:
+        - name: logstash-config
+          mountPath: /usr/share/logstash/config
+        - name: logstash-pipeline
+          mountPath: /usr/share/logstash/pipeline
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9600
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9600
+          initialDelaySeconds: 30
+          periodSeconds: 5
+      volumes:
+      - name: logstash-config
+        hostPath:
+          path: /data/logstash/config
+          type: DirectoryOrCreate
+      - name: logstash-pipeline
+        hostPath:
+          path: /data/logstash/pipeline
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: financial-system
+spec:
+  selector:
+    app: logstash
+  ports:
+  - name: api
+    port: 9600
+    targetPort: 9600
+  - name: beats
+    port: 5044
+    targetPort: 5044
+  type: ClusterIP

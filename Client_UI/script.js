@@ -30,7 +30,10 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
         return alert("Please fill in all MongoDB connection details.");
       }
 
-      const res = await fetch('http://localhost:7000/use-mongo', {
+      // Use environment variable or default
+      const API_BASE = process.env.TRANSACTION_API_URL || 'http://transaction-generator-api:7000';
+
+      const res = await fetch(`${API_BASE}/use-mongo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uri, dbName: db, collectionName: coll })

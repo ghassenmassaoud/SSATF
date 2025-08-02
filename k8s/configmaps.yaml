@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: financial-system
+data:
+  KAFKA_BROKER: "k-service.financial-system.svc.cluster.local:9092"
+  ELASTICSEARCH_HOST: "http://elasticsearch:9200"
+  KIBANA_HOST: "http://kibana:5601"
+  MONGO_URI: "mongodb://mongodb:27017/Financial_Transactions"
+  DATABASE_NAME: "Financial_Transactions"
+  COLLECTION_NAME: "Fin_Trans"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+  namespace: financial-system
+data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    http.port: 9600
+    xpack.monitoring.enabled: false
+    pipeline.workers: 2
+    pipeline.batch.size: 125
+    pipeline.batch.delay: 50
+  pipeline.conf: |
+    input {
+      kafka {
+        bootstrap_servers => "k-service:9092"
+        topics => ["data-enriched-transactions"]
+        codec => "json"
+        consumer_threads => 2
+        group_id => "logstash-consumer-group"
+      }
+    }
+    
+    filter {
+      mutate {
+        remove_field => ["_id"]
+      }
+      
+      # Add timestamp if missing
+      if ![timestamp] {
+        ruby {
+          code => "event.set('timestamp', Time.now.utc.iso8601)"
+        }
+      }
+      
+      # Parse timestamp
+      date {
+        match => [ "timestamp", "ISO8601" ]
+        target => "@timestamp"
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch:9200"]
+        index => "financial-transactions-%{+YYYY.MM.dd}"
+        document_id => "%{transactionId}"
+        template_name => "financial-transactions"
+        template_pattern => "financial-transactions-*"
+        template => {
+          "index_patterns" => ["financial-transactions-*"],
+          "settings" => {
+            "number_of_shards" => 1,
+            "number_of_replicas" => 0
+          },
+          "mappings" => {
+            "properties" => {
+              "transactionId" => { "type" => "keyword" },
+              "amount" => { "type" => "double" },
+              "currency" => { "type" => "keyword" },
+              "timestamp" => { "type" => "date" },
+              "validationStatus" => { "type" => "keyword" },
+              "isValid" => { "type" => "boolean" },
+              "failureReasons" => { "type" => "text" },
+              "recommendations" => { "type" => "text" }
+            }
+          }
+        }
+      }
+      
+      stdout {
+        codec => rubydebug {
+          metadata => false
+        }
+      }
+    }
+
+
