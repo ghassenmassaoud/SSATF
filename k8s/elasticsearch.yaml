@@ -13,9 +13,23 @@ spec:
       labels:
         app: elasticsearch
     spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+      - name: fix-permissions
+        image: busybox:1.35
+        command: ['sh', '-c', 'chown -R 1000:1000 /usr/share/elasticsearch/data']
+        volumeMounts:
+        - name: elasticsearch-storage
+          mountPath: /usr/share/elasticsearch/data
+        securityContext:
+          runAsUser: 0
       containers:
       - name: elasticsearch
         image: docker.elastic.co/elasticsearch/elasticsearch:9.0.3
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
         ports:
         - containerPort: 9200
         - containerPort: 9300
@@ -139,3 +153,4 @@ spec:
           - key: import-dashboard.sh
             path: import-dashboard.sh
             mode: 0755
+
