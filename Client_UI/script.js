@@ -14,7 +14,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch('http://localhost:7000/upload-file', {
+      const res = await fetch('http://vermeg-job.duckdns.org:31476:7000/upload-file', {
         method: 'POST',
         body: formData
       });
@@ -31,7 +31,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       }
 
       // Use environment variable or default
-      const API_BASE = process.env.TRANSACTION_API_URL || 'http://transaction-generator-api:7000';
+const API_BASE = 'http://vermeg-job.duckdns.org:31476';
 
       const res = await fetch(`${API_BASE}/use-mongo`, {
         method: 'POST',
