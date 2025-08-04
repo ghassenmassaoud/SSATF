@@ -14,7 +14,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch('http://vermeg-job.duckdns.org:31476/upload-file', {
+      const res = await fetch('/upload-file', {
         method: 'POST',
         body: formData
       });
@@ -33,7 +33,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       // Use environment variable or default
 const API_BASE = 'http://vermeg-job.duckdns.org:31476';
 
-      const res = await fetch(`${API_BASE}/use-mongo`, {
+      const res = await fetch(`/use-mongo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uri, dbName: db, collectionName: coll })
