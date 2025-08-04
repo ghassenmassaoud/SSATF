@@ -14,7 +14,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch('http://vermeg-job.duckdns.org:31476:7000/upload-file', {
+      const res = await fetch('http://vermeg-job.duckdns.org:31476/upload-file', {
         method: 'POST',
         body: formData
       });
