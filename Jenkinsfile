@@ -140,7 +140,7 @@ pipeline {
         stage("Quality Gate - DataAnalyser") {
           steps {
             timeout(time: 3, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: false
+              waitForQualityGate abortPipeline: true
             }
           }
         }
@@ -148,7 +148,7 @@ pipeline {
         stage("Quality Gate - Transaction API") {
           steps {
             timeout(time: 3, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: false
+              waitForQualityGate abortPipeline: true
             }
           }
         }
@@ -156,7 +156,7 @@ pipeline {
         stage("Quality Gate - Client UI") {
           steps {
             timeout(time: 3, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: false
+              waitForQualityGate abortPipeline: true
             }
           }
         }
@@ -273,14 +273,14 @@ pipeline {
           echo " Last commit message: ${commitMessage}"
           if (commitMessage.contains("Merge pull request")) {
             echo " Merge commit detected! Triggering CD pipeline..."
-            
-          } else {
-            echo " Not a merge commit. Skipping CD pipeline."
             build job: 'CD', parameters: [
               string(name: 'DATA_ANALYSER_IMAGE', value: "${DOCKER_REGISTRY}/data-analyser:${BUILD_NUMBER}"),
               string(name: 'TRANSACTION_API_IMAGE', value: "${DOCKER_REGISTRY}/transaction-api:${BUILD_NUMBER}"),
               string(name: 'CLIENT_UI_IMAGE', value: "${DOCKER_REGISTRY}/client-ui:${BUILD_NUMBER}")
             ]
+            
+          } else {
+            echo " Not a merge commit. Skipping CD pipeline."
           }
         }
       }
@@ -294,9 +294,19 @@ pipeline {
       cleanWs()
     }
     success {
+      slackSend(
+      color: 'good',
+      message: "✅ *${env.JOB_NAME}* #${env.BUILD_NUMBER} succeeded. (<${env.BUILD_URL}|Open>)",
+      webhookUrl: credentials('SLACK_WEBHOOK')
+    )
       echo '✅ Pipeline CI completed successfully!'
     }
     failure {
+      slackSend(
+      color: 'danger',
+      message: "❌ *${env.JOB_NAME}* #${env.BUILD_NUMBER} failed! (<${env.BUILD_URL}|Open>)",
+      webhookUrl: credentials('SLACK_WEBHOOK')
+    )
       echo '❌ Pipeline failed!'
     }
   }
